@@ -1,4 +1,5 @@
 import  React, { Component } from  'react';
+import { Link as RouterLink } from  'react-router-dom';
 import  FilmsService  from  './FilmsService';
 
 // Material UI
@@ -79,8 +80,8 @@ render() {
                     <TableCell>{c.deskripsi}</TableCell>
                     <TableCell>
                     <Button onClick={(e)=>  this.handleDelete(e,c.pk) } variant="outlined" color="secondary">Delete</Button>&nbsp;
-                    <Button href={"/film/update/" + c.pk} variant="contained" color="primary">Update</Button>
-                    <Button href={"/film/" + c.pk} variant="contained" color="primary" style={{marginLeft: 3}}>Detail</Button>
+                    <Button component={RouterLink} to={"/film/update/" + c.pk} variant="contained" color="primary">Update</Button>
+                    <Button component={RouterLink} to={"/film/detail/" + c.pk} variant="contained" color="primary" style={{marginLeft: 3}}>Detail</Button>
                     </TableCell>
                 </TableRow>
             ) : 

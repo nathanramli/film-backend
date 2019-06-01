@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import  FilmsList from './FilmsList'
 import  FilmCreate  from './FilmCreate'
@@ -11,22 +11,19 @@ import  FilmDetail  from './FilmDetail'
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 
-import TemplateAppBar from './components/TemplateAppBar';
+import TemplateAppBar from './components/admin/TemplateAppBar';
 
-const BaseLayout = () => (
-  <React.Fragment>
-   <TemplateAppBar/>
-
+const Content = () => (
     <Box my={2}>
       <Container>
-        <Route path="/" exact component={FilmsList} />
-        <Route path="/film/update/:pk" exact component={FilmUpdate} />
-        <Route path="/film/add/" component={FilmCreate} />
-        <Route path="/film/detail/:pk" component={FilmDetail} />
+        <Switch>
+          <Route path="/" exact component={FilmsList} />
+          <Route path="/film/update/:pk" exact component={FilmUpdate} />
+          <Route path="/film/add/" component={FilmCreate} />
+          <Route path="/film/detail/:pk" component={FilmDetail} />
+        </Switch>
       </Container>
     </Box>
-
-  </React.Fragment>
 )
 
 class App extends Component {
@@ -34,7 +31,8 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <BaseLayout/>
+        <TemplateAppBar/>
+        <Content/>
       </BrowserRouter>
     );
   }
