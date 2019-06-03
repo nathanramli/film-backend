@@ -5,7 +5,6 @@ import  TemplateAppBar  from  './components/admin/AdminComponent/TemplateAppBar'
 import  TemplateFooterBar  from  './components/admin/AdminComponent/TemplateFooterBar';
 
 import UserHome from './components/user/PageComponent/UserHome';
-import AnimeDetail from './components/user/PageComponent/AnimeDetail';
 
 import  FilmsList from './components/admin/PageComponent/FilmsList'
 import  FilmCreate  from './components/admin/PageComponent/FilmCreate'
@@ -34,7 +33,7 @@ const Content = () => (
     <Switch>
       <Route path="/" exact component={UserHome} />
       <Route path="/admin" component={Admin} />
-      <Route path="/:kode" component={AnimeDetail} />
+      <Route path="/:kode" component={UserHome} />
       <Route component={NotFound} />
     </Switch>
 )

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import {Link as RouterLink } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -42,33 +42,23 @@ function AnimeCard(props) {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <Link underline="none" href={props.link} className={classes.linkstyle}>
-          <CardHeader
-            title={props.judul}
-            subheader="September 14, 2016"
-          />
-        </Link>
-      </CardActionArea>
-      <CardActionArea>
-        <Link href={props.link}>
+        <Link component={RouterLink} to={props.link}>
           <CardMedia
             style={{height: 0}}
             className={classes.media}
             image={require ("./../../../assets/image/"+props.gambar+".jpg")}
             title={props.judul}
           />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {props.deskripsi}
-            </Typography>
-          </CardContent>
+      <CardActionArea>
+        <Link component={RouterLink} underline="none" to={props.link} className={classes.linkstyle}>
+          <CardHeader
+            title={props.judul}
+            subheader="September 14, 2016"
+          />
         </Link>
       </CardActionArea>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-      </CardActions>
+        </Link>
+      </CardActionArea>
     </Card>
     );
 }
