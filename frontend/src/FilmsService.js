@@ -4,8 +4,14 @@ const API_URL = 'http://localhost:8000';
 export default class FilmsService{
 
     // constructor(){}
-
-
+    getFilmByJudul(judul){
+        const url = `${API_URL}/api/film_by_judul/${judul}`;
+        return axios.get(url).then(response => response.data);
+    }
+    getFilmByKode(kode){
+        const url = `${API_URL}/api/film_by_kode/${kode}`;
+        return axios.get(url).then(response => response.data);
+    }
     getFilms() {
         const url = `${API_URL}/api/film/`;
         return axios.get(url).then(response => response.data);

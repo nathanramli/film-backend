@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import RecipeReviewCard from './AnimeCard';
 import Grid from '@material-ui/core/Grid';
 
 const Anime = ({ animeAnime }) => 
 {
-	const lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit.";
 	const listAnime = animeAnime.map(anime => {
 		return(
 	      <Grid item xs={6} sm={3} key={anime.id}>

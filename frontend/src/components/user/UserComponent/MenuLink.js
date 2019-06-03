@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Link from '@material-ui/core/Link';
 import {Link as RouterLink} from 'react-router-dom';
-import Step from '@material-ui/core/Step';
 const Menulink = ({ menuMenu }) =>
 {
 	const listmenu = menuMenu.map(menu =>

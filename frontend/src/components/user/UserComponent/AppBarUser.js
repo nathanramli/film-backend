@@ -5,7 +5,6 @@ import logo from '../../../assets/image/logo.png';
 
 //Material Ui
 import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 
 class AppBarUser extends Component{
@@ -20,7 +19,7 @@ class AppBarUser extends Component{
 		return(
 		<AppBar position="relative" color="default" style={{backgroundColor: '#ffb7c5'}} elevation={0}>
          <Toolbar style={{borderBottom: '2px solid white'}}>
-          <img src={logo} width="20%"/>
+          <img src={logo} width="20%" alt="Fansnime"/>
           <div  style={{marginLeft: "auto"}}>
           <Menulink menuMenu={this.state.menu}/>
           </div>

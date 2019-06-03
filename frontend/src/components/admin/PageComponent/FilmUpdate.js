@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import FilmsService from './FilmsService';
+
+import FilmsService from '../../../FilmsService';
 
 // Material UI
 // import { makeStyles } from '@material-ui/core/styles';
@@ -16,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 
 const filmsService = new FilmsService();
 
-class FilmCreate extends Component {
+class FilmUpdate extends Component {
 
     constructor(props) {
         super(props);
@@ -35,17 +36,29 @@ class FilmCreate extends Component {
       // componentWillUpdate dipanggil saat ada state yang telah berubah atau diupdate
 
       // componentWillMount = Fungsi ini dipanggil sebelum component selesai diload / akan diload
+      componentDidMount(){ // Fungsi ini dipanggil ketika component selesai dibuat/OnDocumentSuccessLoad
+        const { match: { params } } = this.props;
+        if(params && params.pk)
+        {
+          filmsService.getFilm(params.pk).then((c)=>{
+            this.setState({judul_film:c.judul_film});
+            this.setState({deskripsi:c.deskripsi});
+          })
+        }
+      }
 
-      handleCreate(){
-        filmsService.createFilm(
+      handleUpdate(pk){
+        filmsService.updateFilm(
           {
+            "pk": pk,
             "judul_film": this.state.judul_film,
             "deskripsi": this.state.deskripsi
         }          
         ).then((result)=>{
-          alert("Film berhasil dibuat!");
+          console.log(result);
+          alert("Film berhasil diupdate!");
         }).catch(()=>{
-          alert('There was an error! Please re-check your form.' + this.state.judul_film + this.state.deskripsi);
+          alert('There was an error! Please re-check your form.');
         });
       }
       handleSubmit(event) {
@@ -53,10 +66,6 @@ class FilmCreate extends Component {
 
         if(params && params.pk){
           this.handleUpdate(params.pk);
-        }
-        else
-        {
-          this.handleCreate();
         }
 
         event.preventDefault();
@@ -72,6 +81,7 @@ class FilmCreate extends Component {
       render() {
 
         return (
+          <React.Fragment>
           <Container>
             <Box p={3}>
               <Card>
@@ -79,10 +89,10 @@ class FilmCreate extends Component {
                 <form onSubmit={this.handleSubmit}>
                   <Grid container spacing={3}>
                     <Grid item xs={6}>
-                      <TextField label="Judul Film" margin="normal" onChange={this.handleChangesJudul} fullWidth required/>
+                      <TextField label="Judul Film" margin="normal" onChange={this.handleChangesJudul} value={this.state.judul_film} fullWidth required/>
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField label="Deskripsi" margin="normal" variant="outlined" onChange={this.handleChangesDeskripsi} fullWidth required/>
+                      <TextField label="Deskripsi" margin="normal" variant="outlined" onChange={this.handleChangesDeskripsi} value={this.state.deskripsi}  fullWidth required/>
                     </Grid>
                   <Button type="submit" color="primary">Submit</Button>
                   </Grid>
@@ -91,8 +101,9 @@ class FilmCreate extends Component {
             </Card>
             </Box>
           </Container>
+          </React.Fragment>
         );
       }  
 }
 
-export default FilmCreate;
+export default FilmUpdate;

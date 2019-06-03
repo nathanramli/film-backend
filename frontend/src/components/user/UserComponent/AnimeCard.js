@@ -1,17 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+
 import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
+import red from '@material-ui/core/colors/red';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+
 const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: 400,
@@ -37,11 +38,6 @@ const useStyles = makeStyles(theme => ({
 
 function AnimeCard(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  function handleExpandClick() {
-    setExpanded(!expanded);
-  }
 
   return (
     <Card className={classes.card}>
@@ -71,8 +67,6 @@ function AnimeCard(props) {
       <CardActions disableSpacing>
         <IconButton aria-label="Add to favorites">
           <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="Share">
         </IconButton>
       </CardActions>
     </Card>

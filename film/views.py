@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import api_view
 from rest_framework import status
 
@@ -23,7 +24,8 @@ def film_list(request):
         except EmptyPage:
             data = paginator.page(paginator.num_pages)
 
-        serializer = FilmSerializer(data,context={'request': request} ,many=True)
+        serializer = FilmSerializer(data,context={'request': request}, many=True)
+
         if data.has_next():
             nextPage = data.next_page_number()
         if data.has_previous():
@@ -40,6 +42,7 @@ def film_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def film_detail(request, pk):
+    parser_classes = (MultiPartParser, FormParser)    
     try:
         film = Film.objects.get(pk=pk)
     except Film.DoesNotExist:
@@ -57,5 +60,45 @@ def film_detail(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
+        film.gambar.delete()
         film.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def film_kode(request, kode):
+    try:
+        film = Film.objects.get(kode=kode)
+    except Film.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == "GET":
+        serializer = FilmSerializer(film,context={'request': request})
+        return Response(serializer.data)
+
+@api_view(['GET'])
+def film_judul(request, judul):
+    try:
+        film = Film.objects.filter(judul__icontains = judul)
+    except Film.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    data = []
+    nextPage = 1
+    previousPage = 1
+    page = request.GET.get('page', 1)
+    paginator = Paginator(film, 5)
+    try:
+        data = paginator.page(page)
+    except PageNotAnInteger:
+        data = paginator.page(1)
+    except EmptyPage:
+        data = paginator.page(paginator.num_pages)
+
+    serializer = FilmSerializer(data,context={'request': request}, many=True)
+
+    if data.has_next():
+        nextPage = data.next_page_number()
+    if data.has_previous():
+        previousPage = data.previous_page_number()
+
+    return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/film/?page=' + str(nextPage), 'prevlink': '/api/film/?page=' + str(previousPage)})

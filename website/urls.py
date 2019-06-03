@@ -19,8 +19,22 @@ from django.urls import path
 from film import views
 from django.conf.urls import url
 
+from django.conf import settings
+from django.views.static import serve
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/film/$', views.film_list),
-    url(r'^api/film/(?P<pk>[0-9]+)$', views.film_detail),    
+    path('api/film/', views.film_list),
+    path('api/film/<int:pk>', views.film_detail),
+    path('api/film_by_kode/<slug:kode>', views.film_kode),
+    path('api/film_by_judul/<slug:judul>', views.film_judul),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
