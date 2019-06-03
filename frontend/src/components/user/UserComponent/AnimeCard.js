@@ -2,15 +2,15 @@ import React from 'react';
 import {Link as RouterLink } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import IconButton from '@material-ui/core/IconButton';
+// import FavoriteIcon from '@material-ui/icons/Favorite';
+// import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import red from '@material-ui/core/colors/red';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -46,7 +46,7 @@ function AnimeCard(props) {
           <CardMedia
             style={{height: 0}}
             className={classes.media}
-            image={require ("./../../../assets/image/"+props.gambar+".jpg")}
+            image={props.gambar}
             title={props.judul}
           />
       <CardActionArea>

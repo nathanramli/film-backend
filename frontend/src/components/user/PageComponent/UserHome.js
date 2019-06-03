@@ -10,22 +10,11 @@ import Container from '@material-ui/core/Container';
 
 
 class UserHome extends Component{
-	state={
-		animeList:[
-        {id:'1',judul:'Tate No Yusha',gambar:1,deskripsi:'lorem',link:'#'},
-        {id:'2',judul:'Oni Chi Chi',gambar:2,deskripsi:'lorem',link:'/onichichi'},
-        {id:'3',judul:'Gege No Kitaro',gambar:3,deskripsi:'lorem',link:'#'},
-        {id:'4',judul:'Highschool Dxd',gambar:4,deskripsi:'lorem',link:'#'},
-        {id:'5',judul:'Kenja No Mago',gambar:5,deskripsi:'lorem',link:'#'},
-      ],
-	}
 	render(){
 		const Contain = () => {
 			return(
 			<div>
-				<Route path="/" exact render={(props)=>
-					<Anime animeAnime={this.state.animeList} />
-				} />
+				<Route path="/" exact component={Anime} />
 				<Route path="/:kode" component={AnimeDetail} />
 			</div>
 			);

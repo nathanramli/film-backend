@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import FilmsService from '../../../FilmsService';
-import AppBarUser from '../UserComponent/AppBarUser';
 
 // Material UI
 import Grid from '@material-ui/core/grid';
@@ -8,16 +7,16 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import ListSubheader from '@material-ui/core/ListSubheader';
+// import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import Movie from '@material-ui/icons/Movie';
-import Download from '@material-ui/icons/Link';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+// import Download from '@material-ui/icons/Link';
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
 
 
 const filmsService = new FilmsService();
