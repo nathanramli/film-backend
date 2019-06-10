@@ -81,17 +81,16 @@ class FilmUpdate extends Component {
       render() {
 
         return (
-          <React.Fragment>
           <Container>
             <Box p={3}>
               <Card>
                 <CardContent>
                 <form onSubmit={this.handleSubmit}>
                   <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <TextField label="Judul Film" margin="normal" onChange={this.handleChangesJudul} value={this.state.judul_film} fullWidth required/>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <TextField label="Deskripsi" margin="normal" variant="outlined" onChange={this.handleChangesDeskripsi} value={this.state.deskripsi}  fullWidth required/>
                     </Grid>
                   <Button type="submit" color="primary">Submit</Button>
@@ -101,7 +100,6 @@ class FilmUpdate extends Component {
             </Card>
             </Box>
           </Container>
-          </React.Fragment>
         );
       }  
 }

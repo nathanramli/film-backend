@@ -53,7 +53,6 @@ function AnimeCard(props) {
         <Link component={RouterLink} underline="none" to={props.link} className={classes.linkstyle}>
           <CardHeader
             title={props.judul}
-            subheader="September 14, 2016"
           />
         </Link>
       </CardActionArea>

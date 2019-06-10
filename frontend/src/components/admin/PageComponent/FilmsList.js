@@ -12,6 +12,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab';
 import SearchIcon from '@material-ui/icons/Search';
+import LinkIcon from '@material-ui/icons/Link';
+import MonoIcon from '@material-ui/icons/PeopleRounded';
 import StarIcon from '@material-ui/icons/Star';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -41,7 +43,6 @@ constructor(props) {
 componentDidMount() {
     var  self  =  this;
     filmsService.getFilms().then(function (result) {
-        console.log(result);
         self.setState({ films:  result.data , count: result.count, nextPageURL: result.nextlink, prevPage: result.prevlink})
     });
 }
@@ -76,8 +77,10 @@ handleSubmit(e){
 
   if(this.state.cari !== '' && this.state.cari !== null){
     var  self  =  this;
-    filmsService.getFilmByJudul(this.state.cari).then(function (result) {
-        self.setState({ films:  result.data})
+    let cari = this.state.cari.replace(/ /g, '__'); // Global replacement /character/ gunakan g untuk global dan i untuk case-sensitive
+    filmsService.getFilmByJudul(cari).then(function (result) {
+        if(!result.data.length) return alert('Tidak ada pencarian terkait');
+        self.setState({ films:  result.data, });
     });
     // .catch(()=>{
     //   alert('Masukan form pencarian dengan benar.');
@@ -92,7 +95,6 @@ handleCari(e){
 render() {
 
     return (
-        <React.Fragment>
         <Container>
           <div style={{padding: 10, marginTop: 10}}>
               <form onSubmit={this.handleSubmit.bind(this)}>
@@ -103,8 +105,8 @@ render() {
           <TableHead>
             <TableRow>
                 <TableCell>ID</TableCell>
+                <TableCell align='right' padding='default'>Kode</TableCell>
                 <TableCell align='right' padding='default'>Judul</TableCell>
-                <TableCell align='right' padding='default'>Gambar</TableCell>
                 <TableCell align='right' padding='default'>Jumlah Episode</TableCell>
                 <TableCell align='right' padding='default'>Rating</TableCell>
                 <TableCell align='left' padding='default'>
@@ -122,14 +124,16 @@ render() {
                     <TableCell component="th" scope="row">
                       {row.pk}
                     </TableCell>
+                    <TableCell align="right">{row.kode}</TableCell>
                     <TableCell align="right" >{row.judul}</TableCell>
-                    <TableCell align="right"><img src={`${row.gambar}`} width="150px" alt={row.judul}/></TableCell>
                     <TableCell align="right">{row.jumlah_episode}</TableCell>
                     <TableCell align="right">{row.rating} <StarIcon style={{fontSize: 17, color: "orange"}}/></TableCell>
                     <TableCell>
-                      <Fab onClick={(e)=>  this.handleDelete(e,row.pk) } color="secondary" size="small"><DeleteIcon style={{fontSize: 20}}/></Fab>
+                      <Fab onClick={(e) =>  {if(window.confirm('Anda yakin ingin menghapus anime ini?')) this.handleDelete(e,row.pk)} } color="secondary" size="small"><DeleteIcon style={{fontSize: 20}}/></Fab>
                       <Fab component={RouterLink} to={"/admin/film/update/" + row.pk} color="primary" size="small"><EditIcon style={{fontSize: 20}}/></Fab>
                       <Fab component={RouterLink} to={"/admin/film/detail/" + row.pk} size="small" ><SearchIcon style={{fontSize: 20}}/></Fab>
+                      <Button component={RouterLink} to={"/admin/film/link/" + row.pk} style={{backgroundColor: "rgb(232, 3, 105)", color: "white", marginLeft: 10}} size="small" variant="contained"><LinkIcon/>Link Download</Button>
+                      <Button component={RouterLink} to={"/admin/film/chara/" + row.pk} style={{backgroundColor: "rgb(234, 241, 63)", marginLeft: 10}} size="small" variant="contained"><MonoIcon/>Character</Button>
                     </TableCell>
                   </TableRow>
               )}
@@ -141,7 +145,6 @@ render() {
             <small style={{float: "right"}}>Total : {this.state.count}</small>
           </div>
         </Container>
-        </React.Fragment>
         );
   }
 }

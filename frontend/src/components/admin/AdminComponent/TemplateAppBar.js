@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-
 // Components Material UI
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -26,28 +25,10 @@ import Typography from '@material-ui/core/Typography';
 
 
 class TemplateAppBar extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-		    buka: false,
-		    nested: false
-		};
-		this.handleBuka = this.handleBuka.bind(this);
-		this.handleNested = this.handleNested.bind(this);
+	state = {
+		buka: false,
+		nested: false
 	}
-
-	handleBuka(){
-		this.setState({buka: true});
-	}
-
-	handleTutup(){
-		this.setState({buka: false});
-	}
-
-	handleNested(){
-		this.setState({nested: !this.state.nested})
-	}  
 
   render() {
   	// Semua menu
@@ -61,13 +42,13 @@ class TemplateAppBar extends Component {
 			<AppBar position="static">
 			<Container>
 			  <Toolbar variant="dense">
-				<Button onClick={this.handleBuka.bind(this)} color="inherit"><MenuIcon/></Button>
+				<Button onClick={() => this.setState({buka: true})} color="inherit"><MenuIcon/></Button>
 			    <Typography style={{marginLeft: 'auto'}} variant="h6">Fans</Typography><SettingsIcon/>ADMIN
 			  </Toolbar>
 			</Container>
 			</AppBar>  
 
-			<Drawer anchor="left" open={this.state.buka} onClose={this.handleTutup.bind(this)}>
+			<Drawer anchor="left" open={this.state.buka} onClose={() => this.setState({buka: false})}>
 			<List style={{width: 250}}>
 				<ListItem style={{marginBottom: 20, textAlign: 'center'}}>
 					<ListItemText>
@@ -81,7 +62,7 @@ class TemplateAppBar extends Component {
 						<ListItemText primary={value[0]}/>
 					</ListItem>
 				))}
-				<ListItem button onClick={this.handleNested}>
+				<ListItem button onClick={() => this.setState({nested: !this.state.nested})}>
 					<ListItemIcon>
 						<MenuIcon/>
 					</ListItemIcon>

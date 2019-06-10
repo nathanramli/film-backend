@@ -15,7 +15,11 @@ export default class FilmsService{
     getFilms() {
         const url = `${API_URL}/api/film/`;
         return axios.get(url).then(response => response.data);
-    }  
+    }
+    getFilmsLimitEnam() {
+        const url = `${API_URL}/api/film_limit_enam/`;
+        return axios.get(url).then(response => response.data);
+    }
     getFilmsByURL(link){
         const url = `${API_URL}${link}`;
         return axios.get(url).then(response => response.data);

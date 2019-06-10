@@ -26,10 +26,18 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # API FILM
     path('api/film/', views.film_list),
     path('api/film/<int:pk>', views.film_detail),
     path('api/film_by_kode/<slug:kode>', views.film_kode),
     path('api/film_by_judul/<slug:judul>', views.film_judul),
+    path('api/film_limit_enam/', views.film_limit_enam),
+    # API LINK
+    path('api/link/<int:id_film>', views.link_list),
+    # API CHARACTER
+    path('api/chara/', views.characters),
+    path('api/chara/<int:id_film>', views.character_list),
+    path('api/chara_detail/<int:pk>', views.character_detail),
 ]
 
 if settings.DEBUG:

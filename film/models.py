@@ -14,6 +14,28 @@ class Film(models.Model):
 	credit = models.TextField(blank=True, null=True)
 	deskripsi = models.TextField(blank=True, null=True)
 	gambar = models.ImageField(null=True, upload_to='gambar')
+	tanggal_post = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return self.judul
+
+class Character(models.Model):
+	id_film = models.IntegerField()
+	nama = models.CharField(max_length=255, null=True)
+	foto = models.ImageField(null=True, upload_to='character')
+
+	def __str__(self):
+		return self.nama
+
+class LinkDownload(models.Model):
+	id_film = models.IntegerField()
+	judul_link = models.TextField(blank=True, null=True)
+	url1080p = models.TextField(blank=True, null=True)
+	url720p = models.TextField(blank=True, null=True)
+	url540p = models.TextField(blank=True, null=True)
+	url480p = models.TextField(blank=True, null=True)
+	url360p = models.TextField(blank=True, null=True)
+	url240p = models.TextField(blank=True, null=True)
+
+	def __str__(self):
+		return self.judul_link

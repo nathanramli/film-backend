@@ -7,52 +7,28 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
-import Input from '@material-ui/core/Input';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 
-
 class FilmCreate extends Component {
 
-    constructor(props) {
-        super(props);
+      state = {
+          kode: '',
+          judul: '',
+          judul_alternatif: '',
+          musim_rilis: '',
+          jumlah_episode: '',
+          mulai_tayang: '',
+          selesai_tayang: '',
+          studio: '',
+          rating: '',
+          credit: '',
+          deskripsi: '',
+          gambar: null,
+          file: "/placeholder.png"
+      };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangesKode = this.handleChangesKode.bind(this);
-        this.handleChangesJudul = this.handleChangesJudul.bind(this);
-        this.handleChangesJudulAlternatif = this.handleChangesJudulAlternatif.bind(this);
-        this.handleChangesMusimRilis = this.handleChangesMusimRilis.bind(this);
-        this.handleChangesJumlahEpisode = this.handleChangesJumlahEpisode.bind(this);
-        this.handleChangesMulaiTayang = this.handleChangesMulaiTayang.bind(this);
-        this.handleChangesSelesaiTayang = this.handleChangesSelesaiTayang.bind(this);
-        this.handleChangesStudio = this.handleChangesStudio.bind(this);
-        this.handleChangesRating = this.handleChangesRating.bind(this);
-        this.handleChangesCredit = this.handleChangesCredit.bind(this);
-        this.handleChangesDeskripsi = this.handleChangesDeskripsi.bind(this);
-        this.handleChangesGambar = this.handleChangesGambar.bind(this);
-
-        this.state = {
-            kode: '',
-            judul: '',
-            judul_alternatif: '',
-            musim_rilis: '',
-            jumlah_episode: '',
-            mulai_tayang: '',
-            selesai_tayang: '',
-            studio: '',
-            rating: '',
-            credit: '',
-            deskripsi: '',
-            gambar: null,
-            file: "/placeholder.png"
-        };
-      }
-
-      // componentWillUpdate dipanggil saat akan ada state yang berubah atau diupdate
-      // componentWillUpdate dipanggil saat ada state yang telah berubah atau diupdate
-
-      // componentWillMount = Fungsi ini dipanggil sebelum component selesai diload / akan diload
 
       handleCreate(){
         let form_data = new FormData();
@@ -82,17 +58,8 @@ class FilmCreate extends Component {
         });
       }
       handleSubmit(event) {
-        const { match: { params } } = this.props;
-
-        if(params && params.pk){
-          this.handleUpdate(params.pk);
-        }
-        else
-        {
-          this.handleCreate();
-        }
-
         event.preventDefault();
+        this.handleCreate();
       }
       handleChangesKode(event) {
         this.setState({kode: event.target.value});
@@ -137,58 +104,63 @@ class FilmCreate extends Component {
       render() {
 
         return (
-          <React.Fragment>
             <Container>
               <Box p={3}>
                 <Card>
                   <CardContent>
-                  <form onSubmit={this.handleSubmit}>
+                  <form onSubmit={this.handleSubmit.bind(this)}>
                     <Grid container spacing={3}>
                       <Grid item xs={12}>
-                        <TextField label="Kode" margin="normal" onChange={this.handleChangesKode} fullWidth placeholder="Contoh: naruto-shippuden" helperText="Jangan gunakan spasi (Ini untuk urlnya nanti)" required/>
+                        <TextField label="Kode" margin="normal" onChange={this.handleChangesKode.bind(this)} fullWidth placeholder="Contoh: naruto-shippuden" helperText="Jangan gunakan spasi (Ini untuk urlnya nanti)" required/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Judul" margin="normal" onChange={this.handleChangesJudul} helperText="Kalau judul panjang, isi dengan judul inti/singkat aja. judul lengkap tulis di judul alternatif" fullWidth required/>
+                        <TextField label="Judul" margin="normal" onChange={this.handleChangesJudul.bind(this)} helperText="Kalau judul panjang, isi dengan judul inti/singkat aja. judul lengkap tulis di judul alternatif" fullWidth required/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Judul Alternatif" margin="normal" onChange={this.handleChangesJudulAlternatif} fullWidth helperText="Judul panjang atau judul lain dari anime ini (Kalau hanya satu judul samakan dengan judul)" required/>
+                        <TextField label="Judul Alternatif" margin="normal" onChange={this.handleChangesJudulAlternatif.bind(this)} fullWidth helperText="Judul panjang atau judul lain dari anime ini (Kalau hanya satu judul samakan dengan judul)" required/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Musim Rilis" margin="normal" onChange={this.handleChangesMusimRilis} placeholder="Contoh: Spring 2019" fullWidth required/>
+                        <TextField label="Musim Rilis" margin="normal" onChange={this.handleChangesMusimRilis.bind(this)} placeholder="Contoh: Spring 2019" fullWidth required/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Jumlah Episode" margin="normal" onChange={this.handleChangesJumlahEpisode} type="number" inputProps={{step: 1, max: 1000, min: 0}} helperText="Kosongkan atau tulis 0 jika belum tamat" fullWidth/>
+                        <TextField label="Jumlah Episode" margin="normal" onChange={this.handleChangesJumlahEpisode.bind(this)} type="number" inputProps={{step: 1, max: 1000, min: 0}} helperText="Kosongkan atau tulis 0 jika belum tamat" fullWidth/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Mulai Tayang" margin="normal" onChange={this.handleChangesMulaiTayang} placeholder="Contoh: 1 Januari 2019 / Januari 2019" fullWidth/>
+                        <TextField label="Mulai Tayang" margin="normal" onChange={this.handleChangesMulaiTayang.bind(this)} placeholder="Contoh: 1 Januari 2019 / Januari 2019" fullWidth/>
                       </Grid>                      
                      <Grid item xs={12}>
-                        <TextField label="Selesai Tayang" margin="normal" onChange={this.handleChangesSelesaiTayang} placeholder="Contoh: 1 Desember 2019 / Desember 2019" helperText="Jika belum tamat kosongkan" fullWidth/>
+                        <TextField label="Selesai Tayang" margin="normal" onChange={this.handleChangesSelesaiTayang.bind(this)} placeholder="Contoh: 1 Desember 2019 / Desember 2019" helperText="Jika belum tamat kosongkan" fullWidth/>
                       </Grid>
                      <Grid item xs={12}>
-                        <TextField label="Studio" margin="normal" onChange={this.handleChangesStudio} fullWidth/>
+                        <TextField label="Studio" margin="normal" onChange={this.handleChangesStudio.bind(this)} fullWidth/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Rating" margin="normal" onChange={this.handleChangesRating} type="number" helperText="0.0 - 10.0 (lihat dari rating MyAnimeList)" inputProps={{step: 0.01, max: 10, min: 0}} placeholder="Contoh: 7.70" fullWidth required/>
+                        <TextField label="Rating" margin="normal" onChange={this.handleChangesRating.bind(this)} type="number" helperText="0.0 - 10.0 (lihat dari rating MyAnimeList)" inputProps={{step: 0.01, max: 10, min: 0}} placeholder="Contoh: 7.70" fullWidth required/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Credit" margin="normal" variant="outlined" onChange={this.handleChangesCredit} fullWidth multiline rows="2" placeholder="Contoh: awsubs, animedotid & decoder" required/>
+                        <TextField label="Credit" margin="normal" variant="outlined" onChange={this.handleChangesCredit.bind(this)} fullWidth multiline rows="2" placeholder="Contoh: awsubs, animedotid & decoder" required/>
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField label="Deskripsi" margin="normal" variant="outlined" onChange={this.handleChangesDeskripsi} fullWidth multiline rows="4" required/>
+                        <TextField label="Deskripsi" margin="normal" variant="outlined" onChange={this.handleChangesDeskripsi.bind(this)} fullWidth multiline rows="4" required/>
                       </Grid>
+                      <center>
+                        <Grid item xs={12} md={8} lg={6}>
+                          <img src={this.state.file} width="100%" alt=""/>
+                        </Grid>
+                      </center>
                       <Grid item xs={12}>
-                        <img src={this.state.file} width="350px" alt=""/>
-                        <Input id="upload" accept="image/*" onChange={this.handleChangesGambar} fullWidth multiple type="file" required/>
+                        <input id="upload" accept="image/*" onChange={this.handleChangesGambar.bind(this)} multiple type="file" required/>
                       </Grid>
-                    <Button type="submit" color="primary">Tambah</Button>
+                      <div style={{borderTop: '1px solid black', marginLeft: 60, marginRight: 60, width: '100%'}} />
+                      <Grid item xs={12}>
+                        <Button type="submit" variant="contained" color="primary">Tambah</Button>
+                      </Grid>
                     </Grid>
                   </form>
                   </CardContent>
               </Card>
               </Box>
             </Container>
-          </React.Fragment>
         );
       }  
 }

@@ -61,7 +61,6 @@ class FilmDetail extends Component {
       render() {
 
         return (
-          <React.Fragment>
           <Container>
             <Box p={3}>
               <Card>
@@ -136,7 +135,6 @@ class FilmDetail extends Component {
             </Card>
             </Box>
           </Container>
-          </React.Fragment>
         );
       }  
 }

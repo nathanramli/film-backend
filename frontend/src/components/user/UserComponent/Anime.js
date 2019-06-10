@@ -13,7 +13,7 @@ class Anime extends Component {
 
 		componentDidMount() {
 		    var  self  =  this;
-		    filmsService.getFilms().then(function (result) {
+		    filmsService.getFilmsLimitEnam().then(function (result) {
 		        self.setState({ anime:  result.data})
 		    });
 
@@ -25,7 +25,7 @@ class Anime extends Component {
 				<Grid container style={{marginTop: '10px'}} spacing={3}> 
 					{this.state.anime.map(row => 
 						<Grid item xs={12} sm={6} md={4} lg={3} key={row.id}>
-							<RecipeReviewCard judul={row.judul} gambar={row.gambar} deskripsi={row.deskripsi} link={row.kode}/>
+							<RecipeReviewCard judul={row.judul} gambar={row.gambar} link={row.kode}/>
 						</Grid>
 					)}
 				</Grid>

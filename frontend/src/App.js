@@ -10,6 +10,8 @@ import  FilmsList from './components/admin/PageComponent/FilmsList'
 import  FilmCreate  from './components/admin/PageComponent/FilmCreate'
 import  FilmUpdate  from './components/admin/PageComponent/FilmUpdate'
 import  FilmDetail  from './components/admin/PageComponent/FilmDetail'
+import  LinksList  from './components/admin/PageComponent/LinksList'
+import  CharaList  from './components/admin/PageComponent/CharaList'
 
 const Admin = ({ match }) => (
     <React.Fragment>
@@ -20,6 +22,8 @@ const Admin = ({ match }) => (
         <Route path={`${match.path}/film/add`}  component={FilmCreate} />
         <Route path={`${match.path}/film/detail/:pk`} component={FilmDetail} />
         <Route path={`${match.path}/film/update/:pk`} component={FilmUpdate} />
+        <Route path={`${match.path}/film/link/:pk`} component={LinksList} />
+        <Route path={`${match.path}/film/chara/:pk`} component={CharaList} />
       </Switch>
     <TemplateFooterBar/>
     </React.Fragment>
