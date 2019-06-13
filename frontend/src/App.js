@@ -6,6 +6,7 @@ import  TemplateAppBar  from  './components/admin/AdminComponent/TemplateAppBar'
 import  TemplateFooterBar  from  './components/admin/AdminComponent/TemplateFooterBar';
 
 import UserHome from './components/user/PageComponent/UserHome';
+import NotFound from './components/user/PageComponent/NotFound';
 
 import  FilmsList from './components/admin/PageComponent/FilmsList'
 import  FilmCreate  from './components/admin/PageComponent/FilmCreate'
@@ -28,10 +29,6 @@ const Admin = ({ match }) => (
       </Switch>
     <TemplateFooterBar/>
     </React.Fragment>
-)
-
-const NotFound = () => (
-  <div>404 NotFound</div>
 )
 
 const Content = () => (
