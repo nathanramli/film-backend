@@ -28,7 +28,9 @@ class FilmDetail extends Component {
         rating: '',
         credit: '',
         deskripsi: '',
-        gambar: null
+        gambar: null,
+        jenis: '',
+        genre: []
       }
 
       // componentWillUpdate dipanggil saat akan ada state yang berubah atau diupdate
@@ -52,7 +54,9 @@ class FilmDetail extends Component {
                 rating:c.rating,
                 credit:c.credit,
                 deskripsi:c.deskripsi,
-                gambar:c.gambar
+                gambar:c.gambar,
+                jenis:c.jenis,
+                genre: c.genre
             });
           })
         }
@@ -87,6 +91,11 @@ class FilmDetail extends Component {
                             <TableCell>:</TableCell>
                             <TableCell>{this.state.judul_alternatif}</TableCell>
                           </TableRow>
+                          <TableRow>
+                            <TableCell style={{fontWeight: "bold"}}>Genre</TableCell>
+                            <TableCell>:</TableCell>
+                            <TableCell>{this.state.genre}</TableCell>
+                          </TableRow>                           
                           <TableRow>
                             <TableCell style={{fontWeight: "bold"}}>Musim Rilis</TableCell>
                             <TableCell>:</TableCell>
@@ -126,7 +135,8 @@ class FilmDetail extends Component {
                             <TableCell style={{fontWeight: "bold"}}>Deskripsi</TableCell>
                             <TableCell>:</TableCell>
                             <TableCell>{this.state.deskripsi}</TableCell>
-                          </TableRow> 
+                          </TableRow>
+
                         </TableBody>
                       </Table>
                     </Grid>

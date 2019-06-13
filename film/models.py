@@ -1,7 +1,14 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 # Create your models here.
 class Film(models.Model):
+	JENIS_JENIS = (
+		('o', 'ongoing'),
+		('c', 'complete'),
+		('m', 'movie')
+	)
+
 	kode = models.CharField(max_length=255, null=True)
 	judul = models.CharField(max_length=255)
 	judul_alternatif = models.CharField(max_length=255, null=True)
@@ -15,6 +22,8 @@ class Film(models.Model):
 	deskripsi = models.TextField(blank=True, null=True)
 	gambar = models.ImageField(null=True, upload_to='gambar')
 	tanggal_post = models.DateTimeField(auto_now=True)
+	jenis = models.CharField(max_length=1, choices=JENIS_JENIS)
+	genre = ArrayField(models.CharField(max_length=200), null=True)
 
 	def __str__(self):
 		return self.judul

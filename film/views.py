@@ -100,6 +100,15 @@ def film_judul(request, judul):
     return Response({'data': serializer.data})
 
 # Link Download
+@api_view(['POST'])
+def links(request):        
+    if request.method == 'POST':
+        serializer = LinkSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def link_list(request, id_film):

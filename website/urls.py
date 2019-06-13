@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/film_by_judul/<slug:judul>', views.film_judul),
     path('api/film_limit_enam/', views.film_limit_enam),
     # API LINK
+    path('api/link/', views.links),
     path('api/link/<int:id_film>', views.link_list),
     # API CHARACTER
     path('api/chara/', views.characters),

@@ -138,21 +138,21 @@ class  CharaList  extends  Component {
                     <Grid item xs={12} style={{marginTop: 50}}>
                       <div>{this.state.judul}<Button style={{float: 'right'}} color="primary" variant="contained" onClick={this.toggleOpen.bind(this)}>Tambah Character</Button></div>
                       <div style={{overflowX: 'auto', width: '100%'}}>
-                      {this.state.chara.map(row =>
-                        <div style={{padding: '14px 40px 14px 16px', display: 'table-cell'}}>
-                          <Card style={{width: 300}}>
-                            <CardMedia
-                              style={{height: 0, paddingTop: "100%"}}
-                              image={row.foto}
-                              title={row.nama}
-                            />
-                            <CardContent>
-                              <Fab onClick={(e) =>  {if(window.confirm('Anda yakin ingin menghapus character ini?')) this.handleDelete(e,row.pk)} } color="secondary" size="small" style={{float: 'right'}}><DeleteIcon style={{fontSize: 20}}/></Fab>
-                              <Typography gutterBottom variant="h6">
-                                {row.nama}
-                              </Typography>
-                            </CardContent>
-                          </Card>
+                        {this.state.chara.map(row =>
+                          <div style={{padding: '14px 40px 14px 16px', display: 'table-cell'}}>
+                            <Card style={{width: 300}}>
+                              <CardMedia
+                                style={{height: 0, paddingTop: "100%"}}
+                                image={row.foto}
+                                title={row.nama}
+                              />
+                              <CardContent>
+                                <Fab onClick={(e) =>  {if(window.confirm('Anda yakin ingin menghapus character ini?')) this.handleDelete(e,row.pk)} } color="secondary" size="small" style={{float: 'right'}}><DeleteIcon style={{fontSize: 20}}/></Fab>
+                                <Typography gutterBottom variant="h6">
+                                  {row.nama}
+                                </Typography>
+                              </CardContent>
+                            </Card>
                           </div>
                         )}
                       </div>

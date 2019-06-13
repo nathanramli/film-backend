@@ -6,4 +6,8 @@ export default class LinksService{
         const url = `${API_URL}/api/link/${id_film}`;
         return axios.get(url).then(response => response.data);
     }
+    createLink(link){
+        const url = `${API_URL}/api/link/`;
+        return axios.post(url,link);
+    }    
 }
