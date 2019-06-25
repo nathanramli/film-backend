@@ -39,12 +39,12 @@ class Character(models.Model):
 class LinkDownload(models.Model):
 	id_film = models.IntegerField()
 	judul_link = models.TextField(blank=True, null=True)
-	url1080p = models.TextField(blank=True, null=True)
-	url720p = models.TextField(blank=True, null=True)
-	url540p = models.TextField(blank=True, null=True)
-	url480p = models.TextField(blank=True, null=True)
-	url360p = models.TextField(blank=True, null=True)
-	url240p = models.TextField(blank=True, null=True)
+	url1080p = ArrayField(models.TextField(blank=True), null=True)
+	url720p = ArrayField(models.TextField(blank=True), null=True)
+	url540p = ArrayField(models.TextField(blank=True), null=True)
+	url480p = ArrayField(models.TextField(blank=True), null=True)
+	url360p = ArrayField(models.TextField(blank=True), null=True)
+	url240p = ArrayField(models.TextField(blank=True), null=True)
 
 	def __str__(self):
 		return self.judul_link

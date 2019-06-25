@@ -2,10 +2,14 @@ from rest_framework import serializers
 from .models import Film, LinkDownload, Character
 
 class FilmSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Film 
         fields = ('pk','kode', 'judul', 'judul_alternatif', 'musim_rilis', 'jumlah_episode', 'mulai_tayang', 'selesai_tayang', 'studio', 'rating', 'credit', 'deskripsi', 'gambar', 'jenis', 'genre')
+
+class AnimeDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Film 
+        fields = ('pk','kode', 'judul', 'rating', 'gambar', 'jenis', 'tanggal_post')
 
 class LinkSerializer(serializers.ModelSerializer):
 

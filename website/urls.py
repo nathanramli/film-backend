@@ -29,12 +29,15 @@ urlpatterns = [
     # API FILM
     path('api/film/', views.film_list),
     path('api/film/<int:pk>', views.film_detail),
+    path('api/film_genre/<slug:genre>/', views.film_genre),
+    path('api/film_genre/<slug:genre>', views.film_genre),
     path('api/film_by_kode/<slug:kode>', views.film_kode),
     path('api/film_by_judul/<slug:judul>', views.film_judul),
     path('api/film_limit_enam/', views.film_limit_enam),
     # API LINK
     path('api/link/', views.links),
     path('api/link/<int:id_film>', views.link_list),
+    path('api/link_detail/<int:pk>', views.link_detail),
     # API CHARACTER
     path('api/chara/', views.characters),
     path('api/chara/<int:id_film>', views.character_list),
