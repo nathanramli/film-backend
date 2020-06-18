@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
+from django.db.models import Q
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Film, LinkDownload, Character
 from .serializers import *
@@ -48,11 +50,11 @@ def film_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = FilmSerializer(film,context={'request': request})
+        serializer = FilmSerializer(film,context={'request': request},)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = FilmSerializer(film, data=request.data,context={'request': request})
+        serializer = UpdateFilmSerializer(film, data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -137,13 +139,74 @@ def film_genre(request, genre):
         return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'current' : page, 'nextlink': '/api/film_genre/'+ genre +'/?page=' + str(nextPage), 'prevlink': '/api/film_genre/'+ genre +'/?page=' + str(previousPage)})
 
 @api_view(['GET'])
+def film_jenis(request, jenis):
+    try:
+        if jenis == "o":
+            film = Film.objects.only('judul', 'gambar', 'kode', 'jenis', 'tanggal_post', 'rating', 'musim_rilis', 'selesai_tayang').filter(jenis=jenis).order_by('-tanggal_post')
+        else:
+            film = Film.objects.only('judul', 'gambar', 'kode', 'jenis', 'tanggal_post', 'rating', 'musim_rilis', 'selesai_tayang').filter(jenis=jenis).order_by('-rating')
+    except Film.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == "GET":
+        data = []
+        nextPage = 1
+        previousPage = 1
+        page = request.GET.get('page', 1)
+        paginator = Paginator(film, 12)
+        try:
+            data = paginator.page(page)
+        except PageNotAnInteger:
+            data = paginator.page(1)
+        except EmptyPage:
+            data = paginator.page(paginator.num_pages)
+
+        serializer = AnimeDetailSerializer(data,context={'request': request}, many=True)
+
+        if data.has_next():
+            nextPage = data.next_page_number()
+        if data.has_previous():
+            previousPage = data.previous_page_number()
+
+        return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'current' : page, 'nextlink': '/api/film_jenis/'+ jenis +'/?page=' + str(nextPage), 'prevlink': '/api/film_jenis/'+ jenis +'/?page=' + str(previousPage)})
+
+@api_view(['GET'])
 def film_limit_enam(request):
     # - untuk descending
-    filmC = Film.objects.values('pk','judul', 'gambar', 'kode', 'jenis', 'tanggal_post', 'rating').filter(jenis="c").order_by("-tanggal_post")[:8]
-    filmM = Film.objects.values('pk','judul', 'gambar', 'kode', 'jenis', 'tanggal_post', 'rating').filter(jenis="m").order_by("-tanggal_post")[:8]
-    filmO = Film.objects.values('pk','judul', 'gambar', 'kode', 'jenis', 'tanggal_post', 'rating').filter(jenis="o").order_by("-tanggal_post")[:8]
-    film = filmC.union(filmM, filmO)
-    return Response({'data': film, })
+    filmC = Film.objects.values('pk','judul', 'gambar', 'kode', 'jenis', 'rating', 'musim_rilis', 'tanggal_post', 'selesai_tayang').filter(jenis="c").order_by("-tanggal_post")[:8]
+    filmM = Film.objects.values('pk','judul', 'gambar', 'kode', 'jenis', 'rating', 'musim_rilis', 'tanggal_post', 'selesai_tayang').filter(jenis="m").order_by("-tanggal_post")[:8]
+    filmO = Film.objects.values('pk','judul', 'gambar', 'kode', 'jenis', 'rating', 'musim_rilis', 'tanggal_post', 'selesai_tayang').filter(jenis="o").order_by("-tanggal_post")[:8]
+    return Response({'complete': filmC, 'ongoing': filmO, 'movie': filmM})
+
+@api_view(['GET'])
+def film_keyword(request, keyword):
+    keywordfilter = keyword.replace('__', ' ')
+    try:
+        film = Film.objects.only('judul', 'gambar', 'kode', 'jenis', 'tanggal_post', 'rating', 'musim_rilis', 'selesai_tayang').filter(Q(judul__icontains=keywordfilter) | Q(judul_alternatif__icontains=keywordfilter) | Q(deskripsi__icontains=keywordfilter))
+    except Film.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method == "GET":
+        data = []
+        nextPage = 1
+        previousPage = 1
+        page = request.GET.get('page', 1)
+        paginator = Paginator(film, 12)
+        try:
+            data = paginator.page(page)
+        except PageNotAnInteger:
+            data = paginator.page(1)
+        except EmptyPage:
+            data = paginator.page(paginator.num_pages)
+
+        serializer = AnimeDetailSerializer(data,context={'request': request}, many=True)
+
+        if data.has_next():
+            nextPage = data.next_page_number()
+        if data.has_previous():
+            previousPage = data.previous_page_number()
+
+        return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'current' : page, 'nextlink': '/api/film_keyword/'+ keyword +'/?page=' + str(nextPage), 'prevlink': '/api/film_keyword/'+ keyword +'/?page=' + str(previousPage)})
 
 @api_view(['GET'])
 def film_judul(request, judul):
@@ -165,7 +228,7 @@ def links(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'PUT'])
 def link_detail(request, pk):
     try:
         linkD = LinkDownload.objects.get(pk=pk)
@@ -175,6 +238,14 @@ def link_detail(request, pk):
     if request.method == 'DELETE':
         linkD.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    elif request.method == 'PUT':
+        serializer = LinkSerializer(linkD, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def link_list(request, id_film):
@@ -197,7 +268,7 @@ def characters(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'PUT'])
 def character_detail(request, pk):
     try:
         chara = Character.objects.get(pk=pk)
@@ -208,6 +279,13 @@ def character_detail(request, pk):
         chara.foto.delete()
         chara.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT':
+        serializer = CharacterSerializer(chara, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def character_list(request, id_film):
@@ -219,3 +297,9 @@ def character_list(request, id_film):
     if request.method == 'GET':
         serializer = CharacterSerializer(chara,context={'request': request}, many=True)
         return Response({'data': serializer.data})
+
+@api_view(['GET'])
+def searchsuggest(request):        
+    if request.method == 'GET':
+        film = Film.objects.values('pk', 'judul', 'kode').order_by('judul')
+        return Response({'data': film})

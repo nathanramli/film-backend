@@ -24,6 +24,7 @@ class Film(models.Model):
 	tanggal_post = models.DateTimeField(auto_now=True)
 	jenis = models.CharField(max_length=1, choices=JENIS_JENIS)
 	genre = ArrayField(models.CharField(max_length=200), null=True)
+	admin = models.CharField(max_length=255,null=True)
 
 	def __str__(self):
 		return self.judul
